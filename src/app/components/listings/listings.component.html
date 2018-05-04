@@ -7,6 +7,12 @@
   </h6>
 </header>
 
+<article>
+  <a [routerLink]="['/add']">
+    <button class="btn btn-secondary">Add</button>
+  </a>
+</article>
+
 <table class="table table-striped">
   <thead class="thead-light">
     <tr>
@@ -28,7 +34,7 @@
       <td>{{listing.ProjectId.Name}}</td>
       <td class="text-right ">${{listing.Amount.$numberDecimal}}</td>
       <td class="text-center">
-        <button (click)="deleteListing">delete</button>
+        <button (click)="deleteExpense(listing._id)">delete</button>
       </td>
     </tr>
 

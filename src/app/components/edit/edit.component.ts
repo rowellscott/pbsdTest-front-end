@@ -15,16 +15,19 @@ export class EditComponent implements OnInit {
     editName: string;
     editAmount: number;
     editDescription: string;
+    _id: String;
   };
 
   updatedExpense: Object = {};
+  saveError: String;
 
   customers: Array<Object>;
   projects: Array<Object>;
 
   constructor(
     private myExpense: ExpenseService,
-    private myRoute: ActivatedRoute
+    private myRoute: ActivatedRoute,
+    private myRouter: Router
   ) {}
 
   ngOnInit() {
@@ -49,7 +52,8 @@ export class EditComponent implements OnInit {
             editProjectName: expense.ProjectId.Name,
             editName: expense.Name,
             editAmount: expense.Amount.$numberDecimal,
-            editDescription: expense.Description
+            editDescription: expense.Description,
+            _id: expense._id
           };
           this.loadProjects();
           // console.log(this.expense);
@@ -84,7 +88,7 @@ export class EditComponent implements OnInit {
     );
   }
 
-  editExpense() {
+  editExpense(id) {
     this.updatedExpense = {
       editDate: this.expense.editDate,
       editCustomerName: this.expense.editCustomerName,
@@ -93,5 +97,14 @@ export class EditComponent implements OnInit {
       editAmount: this.expense.editAmount,
       editDescription: this.expense.editDescription
     };
+
+    this.myExpense.updateExpense(id, this.updatedExpense).subscribe(
+      res => {
+        this.myRouter.navigate(["/"]);
+      },
+      err => {
+        this.saveError = err;
+      }
+    );
   }
 }

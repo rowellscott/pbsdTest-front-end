@@ -39,4 +39,11 @@ export class ExpenseService {
       .put(`${environment.apiBase}/edit/${id}`, updates)
       .map(res => res.json());
   }
+
+  //Delete An Expense
+  deleteExpense(id) {
+    return this.myHttp
+      .delete(`${environment.apiBase}/delete/${id}`)
+      .map(res => res.json());
+  }
 }

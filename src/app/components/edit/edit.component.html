@@ -8,7 +8,7 @@
   {{ saveError }}
 </p>
 
-<form (ngSubmit)="editExpense()">
+<form (ngSubmit)="editExpense(expense._id)">
   <label for="date">Date</label>
   <input id="date" type="date" [(ngModel)]="expense.editDate" name="editDate" value="{{expense.editDate">
   <br>
@@ -30,7 +30,7 @@
   <br>
 
   <label for="amount">Amount</label>
-  <input id="amount" class="input" type='number' [(ngModel)]="expense.editAmount" name="editAmount" value="{{expense.editAmount}}">
+  <input id="amount" class="input" type='number' step="0.01" [(ngModel)]="expense.editAmount" name="editAmount" value="{{expense.editAmount}}">
   <br>
 
   <label for="description">Description</label>
@@ -38,8 +38,8 @@
 
   <div class="d-block"></div>
   <button type="submit" class="btn d-inline btn-success">Save</button>
-  <button type="submit" class="btn d-inline btn-secondary">Apply</button>
+  <button type="submit" class="btn d-inline btn-secondary" (click)="apply()">Apply</button>
   <a [routerLink]="['/']">
-    <button class="btn d-inline btn-default">Cancel</button>
+    <button class="btn d-inline btn-light">Cancel</button>
   </a>
 </form>
