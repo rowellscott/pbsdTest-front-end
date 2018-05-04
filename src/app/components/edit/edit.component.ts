@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ExpenseService } from "../../expense.service";
 
 @Component({
   selector: "app-edit",
@@ -15,14 +16,30 @@ export class EditComponent implements OnInit {
     editDescription: string;
   } = {
     editDate: null,
-    editCustomerName: null,
-    editProjectName: null,
-    editName: null,
-    editAmount: null,
-    editDescription: null
+    editCustomerName: "",
+    editProjectName: "",
+    editName: "",
+    editAmount: 0,
+    editDescription: ""
   };
 
-  constructor() {}
+  customers: any;
+  customerId: string = "";
+  constructor(private myExpense: ExpenseService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.myExpense.getCustomers().subscribe(
+      customers => {
+        this.customers = customers;
+        console.log(this.customers);
+      },
+      () => {
+        console.log("Error Getting Customers");
+      }
+    );
+  }
+
+  loadProjects() {
+    console.log(this.expense.editCustomerName);
+  }
 }

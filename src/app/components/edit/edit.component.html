@@ -11,6 +11,15 @@
 
   <label for="customer-names">Customer</label>
   <br>
-  <select *ngFor="let customer of customers" id="date" [(ngModel)]="expense.editCustomerName" name="editCustomerName">
-    <br>
+  <select id="customer-names" [(ngModel)]="expense.editCustomerName" (ngModelChange)="loadProjects()" name="editCustomerName">
+    <option value="{{customer.Name}}" *ngFor="let customer of customers">{{customer.Name}}</option>
+  </select>
+  <br>
+
+  <label for="project-names">Project</label>
+  <br>
+  <select id="project-names" [(ngModel)]="expense.editProjectName" name="editProjectName">
+    <option value="{{project.Name}}" *ngFor="let project of projects">{{project.Name}}</option>
+  </select>
+  <br>
 </form>
