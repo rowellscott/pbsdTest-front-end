@@ -1,3 +1,45 @@
-<p>
-  add works!
+<header>
+  <h1>Expense - Add</h1>
+  <h6>Enter the detail for the expense and click "Save"</h6>
+</header>
+
+<p *ngIf="saveError" class="error alert alert-danger" role="alert">
+  <i class="fa fa-exclamation-circle"></i>
+  {{ saveError }}
 </p>
+
+<form (ngSubmit)="addExpense()">
+  <label for="date">Date</label>
+  <input id="date" type="date" [(ngModel)]="newExpense.newDate" name="newDate" value="{{newExpense.newDate">
+  <br>
+
+  <label for="customer-names">Customer</label>
+  <select id="customer-names" [(ngModel)]="newExpense.newCustomerName" (ngModelChange)="loadProjects()" name="newCustomerName">
+    <option value="{{customer.Name}}" *ngFor="let customer of customers">{{customer.Name}}</option>
+  </select>
+  <br>
+
+  <label for="project-names">Project</label>
+  <select id="project-names" [(ngModel)]="newExpense.newProjectName" name="newProjectName">
+    <option value="{{project.Name}}" *ngFor="let project of projects">{{project.Name}}</option>
+  </select>
+  <br>
+
+  <label for="name">Name</label>
+  <input id="name" class="input" type='text' [(ngModel)]="newExpense.newName" name="newName" value="{{newExpense.newName}}">
+  <br>
+
+  <label for="amount">Amount</label>
+  <input id="amount" class="input" type='number' step="0.01" [(ngModel)]="newExpense.newAmount" name="newAmount" value="{{newExpense.newAmount}}">
+  <br>
+
+  <label for="description">Description</label>
+  <textarea id="description" rows="4" value="{{newExpense.newDescription}}" [(ngModel)]="newExpense.newDescription"></textarea>
+
+  <div class="d-block"></div>
+  <button type="submit" class="btn d-inline btn-success">Save</button>
+  <button type="submit" class="btn d-inline btn-secondary">Save & Add</button>
+  <a [routerLink]="['/']">
+    <button class="btn d-inline btn-light">Cancel</button>
+  </a>
+</form>

@@ -33,6 +33,13 @@ export class ExpenseService {
       .map(res => res.json());
   }
 
+  //Add Expense
+  addExpense(newExpenseData) {
+    return this.myHttp
+      .post(`${environment.apiBase}/add`, newExpenseData)
+      .map(res => res.json());
+  }
+
   //Update Expense
   updateExpense(id, updates) {
     return this.myHttp

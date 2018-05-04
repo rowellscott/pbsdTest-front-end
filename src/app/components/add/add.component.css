@@ -1,0 +1,16 @@
+label {
+  font-weight: bold;
+  display: block;
+}
+
+select {
+  width: 35vw;
+}
+
+textarea {
+  width: 75vw;
+}
+
+.input {
+  width: 50vw;
+}
