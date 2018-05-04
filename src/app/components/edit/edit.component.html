@@ -3,23 +3,43 @@
   <h6>Enter the detail for the expense and click "Save"</h6>
 </header>
 
-<form (ngSubmit)="editExpense(myForm)" #myForm='ngForm'>
+<p *ngIf="saveError" class="error alert alert-danger" role="alert">
+  <i class="fa fa-exclamation-circle"></i>
+  {{ saveError }}
+</p>
+
+<form (ngSubmit)="editExpense()">
   <label for="date">Date</label>
-  <br>
-  <input id="date" type="date" [(ngModel)]="expense.editDate" name="editDate" value="{{expense.editDate}}">
+  <input id="date" type="date" [(ngModel)]="expense.editDate" name="editDate" value="{{expense.editDate">
   <br>
 
   <label for="customer-names">Customer</label>
-  <br>
   <select id="customer-names" [(ngModel)]="expense.editCustomerName" (ngModelChange)="loadProjects()" name="editCustomerName">
     <option value="{{customer.Name}}" *ngFor="let customer of customers">{{customer.Name}}</option>
   </select>
   <br>
 
   <label for="project-names">Project</label>
-  <br>
   <select id="project-names" [(ngModel)]="expense.editProjectName" name="editProjectName">
     <option value="{{project.Name}}" *ngFor="let project of projects">{{project.Name}}</option>
   </select>
   <br>
+
+  <label for="name">Name</label>
+  <input id="name" class="input" type='text' [(ngModel)]="expense.editName" name="editName" value="{{expense.editName}}">
+  <br>
+
+  <label for="amount">Amount</label>
+  <input id="amount" class="input" type='number' [(ngModel)]="expense.editAmount" name="editAmount" value="{{expense.editAmount}}">
+  <br>
+
+  <label for="description">Description</label>
+  <textarea id="description" rows="4" value="{{expense.editDescription}}" [(ngModel)]="expense.editDescription"></textarea>
+
+  <div class="d-block"></div>
+  <button type="submit" class="btn d-inline btn-success">Save</button>
+  <button type="submit" class="btn d-inline btn-secondary">Apply</button>
+  <a [routerLink]="['/']">
+    <button class="btn d-inline btn-default">Cancel</button>
+  </a>
 </form>
