@@ -30,7 +30,7 @@ export class AddComponent implements OnInit {
         this.customers = customers;
         console.log(this.customers);
       },
-      () => {
+      err => {
         console.log("Error Getting Customers");
       }
     );

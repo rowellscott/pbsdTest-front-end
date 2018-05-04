@@ -8,11 +8,15 @@
 </header>
 
 <article>
+  <input type="text" style="width: 55%" [(ngModel)]="searchText">
+  <button class="btn btn-success" (click)=search(searchText)>Search</button>
+  <button class="btn btn-light" (click)="clear()">Clear</button>
   <a [routerLink]="['/add']">
     <button class="btn btn-secondary">Add</button>
   </a>
-</article>
 
+</article>
+<!-- Display Without Search -->
 <table class="table table-striped">
   <thead class="thead-light">
     <tr>
@@ -24,7 +28,7 @@
       <th></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody *ngIf='searchBool===false'>
     <tr *ngFor='let listing of listings'>
       <td class="text-center">
         <a [routerLink]="['/edit/' + listing._id]">edit</a>
@@ -43,6 +47,30 @@
       <td></td>
       <td></td>
       <td class=" text-right ">Total:</td>
+      <td class="text-right ">${{expTotal}}</td>
+    </tr>
+  </tbody>
+
+  <!-- Display If Search Button Is Clicked -->
+  <tbody *ngIf='searchBool===true'>
+    <tr *ngFor='let searchListing of searchListings'>
+      <td class="text-center">
+        <a [routerLink]="['/edit/' + searchListing._id]">edit</a>
+      </td>
+      <td class="text-center">{{ searchListing.Date | date: 'MM-dd-yyyy' }} </td>
+      <td>{{searchListing.CustomerName}}</td>
+      <td>{{searchListing.ProjectId.Name}}</td>
+      <td class="text-right ">${{searchListing.Amount.$numberDecimal}}</td>
+      <td class="text-center">
+        <button (click)="deleteExpense(listing._id)">delete</button>
+      </td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="text-right ">Total:</td>
       <td class="text-right ">${{expTotal}}</td>
     </tr>
   </tbody>
