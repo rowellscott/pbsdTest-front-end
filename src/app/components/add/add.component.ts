@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ExpenseService } from "../../expense.service";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import { environment } from "../../../environments/environment";
 
 @Component({
@@ -16,12 +16,20 @@ export class AddComponent implements OnInit {
     newName: string;
     newAmount: number;
     newDescription: string;
-  };
+  } = {
+    newDate: null;
+    newCustomerName: "";
+    newProjectName: "";
+    newName: "";
+    newAmount: 0.00;
+    newDescription: "";
+  }
 
   saveError: string;
-  customers: Array<Object>;
+  saveBoolean: boolean = true;
+  customers: Array<any>;
   projects: Array<Object>;
-  constructor(private myExpense: ExpenseService) {}
+  constructor(private myExpense: ExpenseService, private myRouter: Router) {}
 
   ngOnInit() {
     //Get Customers' Names For Dropdown Menu
@@ -34,23 +42,45 @@ export class AddComponent implements OnInit {
         console.log("Error Getting Customers");
       }
     );
+
+    this.newExpense.newAmount = this.newExpense.newAmount.toFixed(2);
+ 
+    this.loadProjects()
   }
 
   addExpense() {
     this.myExpense.addExpense(this.newExpense).subscribe(
       res => {
-        console.log(res);
+        console.log(res)
+        if (this.saveBoolean === true) {
+          this.myRouter.navigate(["/"]);
+        } else {
+          location.reload();
+        }
       },
       err => {
-        this.saveError = err.statusText;
+        if(err.status === 0 ){
+          return null;
+        }
         console.log("Add Error:", err);
+        const error= JSON.parse(err._body);
+  
+        if(error.message){
+        this.saveError = error.message} else{
+          this.saveError= "Error Adding Expense, Please Fill in All Required Fields"
+        }
+       
       }
     );
   }
 
   // Get Projects According to Selected Customer
   loadProjects() {
-    console.log(this.newExpense.newCustomerName);
+    if(this.newExpense.newCustomerName === ''){
+      return null;
+    }
+
+    // console.log(this.newExpense.newCustomerName);
     let customerId = "";
     // Get Customer Id for Selected Customer
     this.customers.forEach(customer => {
@@ -62,12 +92,20 @@ export class AddComponent implements OnInit {
     //Get List of Projects From Api
     this.myExpense.getProjects(customerId).subscribe(
       projects => {
-        console.log(projects);
+        // console.log(projects);
         this.projects = projects;
       },
       () => {
         console.log("Error Retrieving Projects");
       }
     );
+  }
+
+  save() {
+    this.saveBoolean = true;
+  }
+
+  saveAndAdd() {
+    this.saveBoolean = false;
   }
 }

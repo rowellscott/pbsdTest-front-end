@@ -10,7 +10,7 @@
 
 <form (ngSubmit)="addExpense()">
   <label for="date">Date</label>
-  <input id="date" type="date" [(ngModel)]="newExpense.newDate" name="newDate" value="{{newExpense.newDate">
+  <input id="date" type="date" [(ngModel)]="newExpense.newDate" name="newDate" value="{{newExpense.newDate}}">
   <br>
 
   <label for="customer-names">Customer</label>
@@ -30,15 +30,16 @@
   <br>
 
   <label for="amount">Amount</label>
+  $
   <input id="amount" class="input" type='number' step="0.01" [(ngModel)]="newExpense.newAmount" name="newAmount" value="{{newExpense.newAmount}}">
   <br>
 
   <label for="description">Description</label>
-  <textarea id="description" rows="4" value="{{newExpense.newDescription}}" [(ngModel)]="newExpense.newDescription"></textarea>
+  <textarea id="description" name="newDescription" rows="4" value="{{newExpense.newDescription}}" [(ngModel)]="newExpense.newDescription"></textarea>
 
   <div class="d-block"></div>
-  <button type="submit" class="btn d-inline btn-success">Save</button>
-  <button type="submit" class="btn d-inline btn-secondary">Save & Add</button>
+  <button type="submit" class="btn d-inline btn-success" (click)="save()">Save</button>
+  <button type="submit" class="btn d-inline btn-secondary" (click)="saveAndAdd">Save & Add New</button>
   <a [routerLink]="['/']">
     <button class="btn d-inline btn-light">Cancel</button>
   </a>

@@ -33,7 +33,7 @@
       <td class="text-center">
         <a [routerLink]="['/edit/' + listing._id]">edit</a>
       </td>
-      <td class="text-center">{{ listing.Date | date: 'MM-dd-yyyy' }} </td>
+      <td class="text-center">{{ listing.Date | date: 'MM-dd-yyyy' : '+0530' }} </td>
       <td>{{listing.CustomerName}}</td>
       <td>{{listing.ProjectId.Name}}</td>
       <td class="text-right ">${{listing.Amount.$numberDecimal}}</td>

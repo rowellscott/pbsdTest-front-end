@@ -10,7 +10,7 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app.routing";
 import { EditComponent } from "./components/edit/edit.component";
 import { ListingsComponent } from "./components/listings/listings.component";
-import { AddComponent } from './components/add/add.component';
+import { AddComponent } from "./components/add/add.component";
 
 @NgModule({
   declarations: [AppComponent, ListingsComponent, EditComponent, AddComponent],

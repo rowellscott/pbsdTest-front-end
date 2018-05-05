@@ -1,33 +1,45 @@
 import { Component, OnInit } from "@angular/core";
 import { ExpenseService } from "../../expense.service";
 import { Router, ActivatedRoute } from "@angular/router";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "app-edit",
   templateUrl: "./edit.component.html",
-  styleUrls: ["./edit.component.css"]
+  styleUrls: ["./edit.component.css"],
+  providers: [DatePipe]
 })
 export class EditComponent implements OnInit {
   expense: {
-    editDate: Date;
+    editDate: any;
     editCustomerName: string;
     editProjectName: string;
     editName: string;
     editAmount: number;
     editDescription: string;
     _id: String;
+  } = {
+    editDate: null,
+    editCustomerName: null,
+    editProjectName: null,
+    editName: null,
+    editAmount: null,
+    editDescription: null,
+    _id: null
   };
 
   updatedExpense: Object = {};
   saveError: String;
+  saveBoolean: boolean = true;
 
-  customers: Array<Object>;
+  customers: Array<any>;
   projects: Array<Object>;
 
   constructor(
     private myExpense: ExpenseService,
     private myRoute: ActivatedRoute,
-    private myRouter: Router
+    private myRouter: Router,
+    private myDate: DatePipe
   ) {}
 
   ngOnInit() {
@@ -45,9 +57,12 @@ export class EditComponent implements OnInit {
     this.myRoute.params.subscribe(params => {
       this.myExpense.getExpense(params["id"]).subscribe(
         expense => {
-          // console.log(expense);
+          //Split Date String to Display In Form
+          const date = expense.Date.substring(0, 10);
+          console.log(expense);
+
           this.expense = {
-            editDate: expense.Date,
+            editDate: date,
             editCustomerName: expense.CustomerName,
             editProjectName: expense.ProjectId.Name,
             editName: expense.Name,
@@ -55,8 +70,9 @@ export class EditComponent implements OnInit {
             editDescription: expense.Description,
             _id: expense._id
           };
+
           this.loadProjects();
-          // console.log(this.expense);
+          console.log(this.expense);
         },
         () => {
           console.log("Error Getting Expense");
@@ -79,7 +95,7 @@ export class EditComponent implements OnInit {
     //Get List of Projects From Api
     this.myExpense.getProjects(customerId).subscribe(
       projects => {
-        console.log(projects);
+        // console.log(projects);
         this.projects = projects;
       },
       () => {
@@ -100,11 +116,23 @@ export class EditComponent implements OnInit {
 
     this.myExpense.updateExpense(id, this.updatedExpense).subscribe(
       res => {
-        this.myRouter.navigate(["/"]);
+        if (this.saveBoolean === true) {
+          this.myRouter.navigate(["/"]);
+        } else {
+          location.reload();
+        }
       },
       err => {
         this.saveError = err;
       }
     );
+  }
+
+  save() {
+    this.saveBoolean = true;
+  }
+
+  apply() {
+    this.saveBoolean = false;
   }
 }

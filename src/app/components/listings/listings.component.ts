@@ -53,6 +53,7 @@ export class ListingsComponent implements OnInit {
   clear() {
     this.searchBool = false;
     this.searchText = "";
+    this.calculateSum(this.listings);
   }
 
   deleteExpense(id) {
