@@ -3,10 +3,10 @@
   <h6>Enter the detail for the expense and click "Save"</h6>
 </header>
 
-<!-- <p *ngIf="saveError" class="error alert alert-danger" role="alert">
+<p *ngIf="saveError" class="error alert alert-danger" role="alert">
   <i class="fa fa-exclamation-circle"></i>
   {{ saveError }}
-</p> -->
+</p>
 
 <form (ngSubmit)="editExpense(expense._id)">
   <label for="date">Date</label>

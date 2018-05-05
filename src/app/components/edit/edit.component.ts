@@ -92,7 +92,7 @@ export class EditComponent implements OnInit {
       }
     });
 
-    //Get List of Projects From Api
+    //Get List of Projects From API
     this.myExpense.getProjects(customerId).subscribe(
       projects => {
         // console.log(projects);
@@ -105,6 +105,27 @@ export class EditComponent implements OnInit {
   }
 
   editExpense(id) {
+    //Validate Input Fields
+    if (
+      this.expense.editAmount > 9999.99 ||
+      this.expense.editAmount < 0 ||
+      !this.expense.editAmount
+    ) {
+      this.saveError = "Invalid Number";
+      return;
+    }
+
+    if (!this.expense.editDate) {
+      this.saveError = "Please Select A Date";
+      return;
+    }
+
+    if (!this.expense.editName) {
+      this.saveError = "Please Fill in Name Field";
+      return;
+    }
+
+    //Create Object With Updates
     this.updatedExpense = {
       editDate: this.expense.editDate,
       editCustomerName: this.expense.editCustomerName,
@@ -114,6 +135,7 @@ export class EditComponent implements OnInit {
       editDescription: this.expense.editDescription
     };
 
+    //Send Updates to Database
     this.myExpense.updateExpense(id, this.updatedExpense).subscribe(
       res => {
         if (this.saveBoolean === true) {
@@ -128,10 +150,12 @@ export class EditComponent implements OnInit {
     );
   }
 
+  //Indicate Save Button is Clicked
   save() {
     this.saveBoolean = true;
   }
 
+  //Indicate Apply Button is Clicked
   apply() {
     this.saveBoolean = false;
   }
