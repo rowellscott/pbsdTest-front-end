@@ -20,7 +20,7 @@ export class AddComponent implements OnInit {
     newDate: null;
     newCustomerName: "";
     newProjectName: "";
-    newName: "";
+    newName: '';
     newAmount: 0.00;
     newDescription: "";
   }
@@ -32,7 +32,7 @@ export class AddComponent implements OnInit {
   constructor(private myExpense: ExpenseService, private myRouter: Router) {}
 
   ngOnInit() {
-    //Get Customers' Names For Dropdown Menu
+    // Get Customers' Names For Dropdown Menu
     this.myExpense.getCustomers().subscribe(
       customers => {
         this.customers = customers;
@@ -44,11 +44,16 @@ export class AddComponent implements OnInit {
     );
 
     this.newExpense.newAmount = this.newExpense.newAmount.toFixed(2);
- 
+
     this.loadProjects()
   }
 
   addExpense() {
+    if (this.newExpense.newAmount > 9999.99 || this.newExpense.newAmount < 0) {
+      this.saveError = 'Invalid Number'
+      return;
+    }
+
     this.myExpense.addExpense(this.newExpense).subscribe(
       res => {
         console.log(res)
@@ -64,24 +69,24 @@ export class AddComponent implements OnInit {
         }
         console.log("Add Error:", err);
         const error= JSON.parse(err._body);
-  
-        if(error.message){
-        this.saveError = error.message} else{
-          this.saveError= "Error Adding Expense, Please Fill in All Required Fields"
+
+        if(error.message) {
+        this.saveError = error.message} else {
+          this.saveError= 'Error Adding Expense, Please Fill in All Required Fields'
         }
-       
+
       }
     );
   }
 
   // Get Projects According to Selected Customer
   loadProjects() {
-    if(this.newExpense.newCustomerName === ''){
+    if(this.newExpense.newCustomerName === '') {
       return null;
     }
 
     // console.log(this.newExpense.newCustomerName);
-    let customerId = "";
+    let customerId = '';
     // Get Customer Id for Selected Customer
     this.customers.forEach(customer => {
       if (customer.Name === this.newExpense.newCustomerName) {
@@ -89,14 +94,14 @@ export class AddComponent implements OnInit {
       }
     });
 
-    //Get List of Projects From Api
+    // Get List of Projects From Api
     this.myExpense.getProjects(customerId).subscribe(
       projects => {
         // console.log(projects);
         this.projects = projects;
       },
       () => {
-        console.log("Error Retrieving Projects");
+        console.log('Error Retrieving Projects');
       }
     );
   }

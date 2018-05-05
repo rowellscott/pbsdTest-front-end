@@ -64,6 +64,7 @@ export class ListingsComponent implements OnInit {
     this.myExpense.deleteExpense(id).subscribe(
       res => {
         location.reload();
+        window.scroll(0, 0);
       },
       err => {
         console.log("Error in deleting:", err);

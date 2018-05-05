@@ -31,7 +31,8 @@
 
   <label for="amount">Amount</label>
   $
-  <input id="amount" class="input" type='number' step="0.01" [(ngModel)]="newExpense.newAmount" name="newAmount" value="{{newExpense.newAmount}}">
+  <input id="amount" class="input" type='number' min="0.00" max="9999.99" step="0.01" [(ngModel)]="newExpense.newAmount" name="newAmount"
+    value="{{newExpense.newAmount}}">
   <br>
 
   <label for="description">Description</label>
