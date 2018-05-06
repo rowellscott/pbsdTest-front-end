@@ -125,6 +125,11 @@ export class EditComponent implements OnInit {
       return;
     }
 
+    if (this.expense.editDescription.length > 350) {
+      this.saveError = "Description Exceeds 350 Character Limit";
+      return;
+    }
+
     //Create Object With Updates
     this.updatedExpense = {
       editDate: this.expense.editDate,

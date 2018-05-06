@@ -36,7 +36,7 @@
       <td class="text-center">{{ listing.Date | date: 'MM-dd-yyyy' : '+0530' }} </td>
       <td>{{listing.CustomerName}}</td>
       <td>{{listing.ProjectId.Name}}</td>
-      <td class="text-right ">${{listing.Amount.$numberDecimal}}</td>
+      <td class="text-right ">{{listing.Amount.$numberDecimal | currency}}</td>
       <td class="text-center">
         <button (click)="deleteExpense(listing._id)">delete</button>
       </td>
@@ -47,7 +47,7 @@
       <td></td>
       <td></td>
       <td class=" text-right ">Total:</td>
-      <td class="text-right ">${{expTotal}}</td>
+      <td class="text-right ">{{expTotal | currency}}</td>
     </tr>
   </tbody>
 
