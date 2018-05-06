@@ -32,7 +32,12 @@ export class ListingsComponent implements OnInit {
   }
 
   search(searchText) {
+    if ((this.searchText = "")) {
+      return;
+    }
+
     this.searchBool = true;
+
     this.searchListings = this.listings.filter(listing => {
       if (
         listing.CustomerName.toLowerCase().indexOf(searchText.toLowerCase()) >

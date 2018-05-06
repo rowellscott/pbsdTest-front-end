@@ -9,7 +9,7 @@
 
 <article>
   <input type="text" style="width: 55%" [(ngModel)]="searchText">
-  <button class="btn btn-success" (click)=search(searchText)>Search</button>
+  <button class="btn btn-success" (click)="search(searchText)">Search</button>
   <button class="btn btn-light" (click)="clear()">Clear</button>
   <a [routerLink]="['/add']">
     <button class="btn btn-secondary">Add</button>
@@ -33,7 +33,7 @@
       <td class="text-center">
         <a [routerLink]="['/edit/' + listing._id]">edit</a>
       </td>
-      <td class="text-center">{{ listing.Date | date: 'MM-dd-yyyy' : '+0530' }} </td>
+      <td class="text-center">{{ listing.Date | date: 'MM-dd-yyyy' : '+530' }} </td>
       <td>{{listing.CustomerName}}</td>
       <td>{{listing.ProjectId.Name}}</td>
       <td class="text-right ">{{listing.Amount.$numberDecimal | currency}}</td>
@@ -57,10 +57,10 @@
       <td class="text-center">
         <a [routerLink]="['/edit/' + searchListing._id]">edit</a>
       </td>
-      <td class="text-center">{{ searchListing.Date | date: 'MM-dd-yyyy' }} </td>
+      <td class="text-center">{{ searchListing.Date | date: 'MM-dd-yyyy' : '+530' }} </td>
       <td>{{searchListing.CustomerName}}</td>
       <td>{{searchListing.ProjectId.Name}}</td>
-      <td class="text-right ">${{searchListing.Amount.$numberDecimal}}</td>
+      <td class="text-right ">{{searchListing.Amount.$numberDecimal | currency}}</td>
       <td class="text-center">
         <button (click)="deleteExpense(listing._id)">delete</button>
       </td>
@@ -71,7 +71,7 @@
       <td></td>
       <td></td>
       <td class="text-right ">Total:</td>
-      <td class="text-right ">${{expTotal}}</td>
+      <td class="text-right ">{{expTotal | currency}}</td>
     </tr>
   </tbody>
 </table>
