@@ -25,17 +25,20 @@ export class ListingsComponent implements OnInit {
         this.listings = listings;
         this.calculateSum(listings);
       },
-      () => {
+      err => {
         console.log("Error Getting Listings");
+        console.log("err:", err);
       }
     );
   }
 
   search(searchText) {
+    //Validate Search Input For Text
     if ((this.searchText = "")) {
       return;
     }
 
+    //Set searchBool to True to Display this.searchListings
     this.searchBool = true;
 
     this.searchListings = this.listings.filter(listing => {
@@ -87,12 +90,12 @@ export class ListingsComponent implements OnInit {
 
     if (this.expAmounts[0] === undefined) {
       this.expTotal = 0;
-      return (this.expTotal = this.expTotal.toFixed(2));
+      return (this.expTotal = parseInt(this.expTotal.toFixed(2), 10));
     }
     // Find Sum of All Amounts
     this.expTotal = this.expAmounts.reduce((sum, current): number => {
       return sum + current;
     });
-    this.expTotal = this.expTotal.toFixed(2);
+    this.expTotal = parseInt(this.expTotal.toFixed(2), 10);
   }
 }
