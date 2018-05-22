@@ -9,7 +9,9 @@ export class ExpenseService {
 
   //Get All Listings
   getListings() {
-    return this.myHttp.get(`${environment.apiBase}`).map(res => res.json());
+    return this.myHttp
+      .get(`${environment.apiBase}/expenses`)
+      .map(res => res.json());
   }
 
   //Get All Customers
