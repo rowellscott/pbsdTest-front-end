@@ -30,6 +30,7 @@ export class EditComponent implements OnInit {
 
   updatedExpense: Object = {};
   saveError: String;
+  saveSuccess: String;
   saveBoolean: boolean = true;
 
   customers: Array<any>;
@@ -139,14 +140,32 @@ export class EditComponent implements OnInit {
       editAmount: this.expense.editAmount,
       editDescription: this.expense.editDescription
     };
+    
 
     //Send Updates to Database
     this.myExpense.updateExpense(id, this.updatedExpense).subscribe(
       res => {
+        //If Click Save
         if (this.saveBoolean === true) {
           this.myRouter.navigate(["/"]);
+        //Else If Click Apply
         } else {
-          location.reload();
+          const date = res.Date.substring(0, 10);
+          console.log(res);
+          const projectName = this.expense.editProjectName;
+          this.expense = {
+            editDate: date,
+            editCustomerName: res.CustomerName,
+            editProjectName: projectName,
+            editName: res.Name,
+            editAmount: res.Amount.$numberDecimal,
+            editDescription: res.Description,
+            _id: res._id
+          };
+   
+          this.saveError = "";
+          this.saveSuccess = "Edits Saved Successfully"
+          setTimeout(() => {this.saveSuccess = "" }, 4000);
         }
       },
       err => {
