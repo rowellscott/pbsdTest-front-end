@@ -43,17 +43,28 @@ export class AddComponent implements OnInit {
         console.log("Error Getting Customers");
       }
     );
-
+    
     this.newExpense.newAmount = this.newExpense.newAmount.toFixed(2);
-
+    
     this.loadProjects();
   }
 
   addExpense() {
+    if (!this.newExpense.newDate) {
+      this.saveError = "Please Select A Date";
+      return;
+    }
+
+    if (!this.newExpense.newName) {
+      this.saveError = "Please Fill in Name Field";
+      return;
+    }
     if (this.newExpense.newAmount > 9999.99 || this.newExpense.newAmount < 0) {
       this.saveError = "Invalid Number";
       return;
     }
+
+    this.newExpense.newAmount = parseFloat(this.newExpense.newAmount);
 
     this.myExpense.addExpense(this.newExpense).subscribe(
       res => {
@@ -70,8 +81,9 @@ export class AddComponent implements OnInit {
             newDescription: ""
           };
           this.newExpense.newAmount = this.newExpense.newAmount.toFixed(2);
-          this.saveSuccess = "New Expense Successfully Saved";
-          setTimeout(() => {this.saveSuccess = "" }, 3500);
+          this.saveError = '';
+          this.saveSuccess = "New Expense Saved Successfully";
+          setTimeout(() => { this.saveSuccess = "" }, 3500);
         }
       },
       err => {
@@ -87,6 +99,8 @@ export class AddComponent implements OnInit {
           this.saveError =
             "Error Adding Expense, Please Fill in All Required Fields";
         }
+        this.newExpense.newAmount = this.newExpense.newAmount.toFixed(2);
+      
       }
     );
   }
