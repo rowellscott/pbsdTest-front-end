@@ -70,7 +70,7 @@ export class AddComponent implements OnInit {
             newDescription: ""
           };
           this.newExpense.newAmount = this.newExpense.newAmount.toFixed(2);
-          this.saveSuccess = "New Expense Saved Successfully";
+          this.saveSuccess = "New Expense Successfully Saved";
           setTimeout(() => {this.saveSuccess = "" }, 3500);
         }
       },
