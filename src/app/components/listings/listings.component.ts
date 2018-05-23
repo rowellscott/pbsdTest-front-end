@@ -71,7 +71,17 @@ export class ListingsComponent implements OnInit {
 
     this.myExpense.deleteExpense(id).subscribe(
       res => {
-        location.reload();
+        this.myExpense.getListings().subscribe(
+          listings => {
+            console.log("listings:", listings);
+            this.listings = listings;
+            this.calculateSum(listings);
+          },
+          err => {
+            console.log("Error Getting Listings");
+            console.log("err:", err);
+          }
+        );
         window.scroll(0, 0);
       },
       err => {

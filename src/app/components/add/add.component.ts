@@ -26,6 +26,7 @@ export class AddComponent implements OnInit {
   };
 
   saveError: string;
+  saveSuccess: String;
   saveBoolean: boolean = true;
   customers: Array<any>;
   projects: Array<Object>;
@@ -60,7 +61,17 @@ export class AddComponent implements OnInit {
         if (this.saveBoolean === true) {
           this.myRouter.navigate(["/"]);
         } else {
-          location.reload();
+          this.newExpense ={
+            newDate: null,
+            newCustomerName: "",
+            newProjectName: "",
+            newName: "",
+            newAmount: 0.0,
+            newDescription: ""
+          };
+          this.newExpense.newAmount = this.newExpense.newAmount.toFixed(2);
+          this.saveSuccess = "New Expense Saved Successfully";
+          setTimeout(() => {this.saveSuccess = "" }, 3500);
         }
       },
       err => {

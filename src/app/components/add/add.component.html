@@ -8,6 +8,11 @@
   {{ saveError }}
 </p>
 
+<p *ngIf="saveSuccess" class="error alert alert-success" role="alert">
+  <i class="fa fa-exclamation-circle"></i>
+  {{ saveSuccess}}
+</p>
+
 <form (ngSubmit)="addExpense()">
   <label for="date">Date</label>
   <input id="date" type="date" [(ngModel)]="newExpense.newDate" name="newDate" value="{{newExpense.newDate}}">

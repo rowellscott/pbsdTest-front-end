@@ -165,7 +165,7 @@ export class EditComponent implements OnInit {
    
           this.saveError = "";
           this.saveSuccess = "Edits Saved Successfully"
-          setTimeout(() => {this.saveSuccess = "" }, 4000);
+          setTimeout(() => {this.saveSuccess = "" }, 3500);
         }
       },
       err => {
